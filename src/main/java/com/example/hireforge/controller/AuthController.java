@@ -67,4 +67,14 @@ public class AuthController {
     public ResponseEntity<?> me() {
         return ResponseEntity.ok(Map.of("message", "You are authenticated"));
     }
+
+    @GetMapping("/test")
+    public ResponseEntity<?> test() {
+        System.out.println(">>> Hireforge Backend: Test Endpoint Hit! <<<");
+        return ResponseEntity.ok(Map.of(
+                "status", "Online",
+                "project", "Hireforge",
+                "message", "Database and Security are working!"
+        ));
+    }
 }

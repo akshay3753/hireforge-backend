@@ -1,19 +1,20 @@
 spring:
   datasource:
-    url: ${DB_URL}
-    username: ${DB_USERNAME}
-    password: ${DB_PASSWORD}
+    # Render provides a variable called DATABASE_URL.
+    # If it's missing (like on your laptop), it falls back to your local Postgres.
+    url: ${DATABASE_URL:${DB_URL:jdbc:postgresql://localhost:5432/hireforge}}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
 
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: false
-
-server:
-  # This tells the app: Use the PORT variable from Render,
-  # but use 8080 as a backup if running locally.
-  port: ${PORT:8080}
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
 jwt:
-  secret: ${JWT_SECRET}
+  # It's better to keep the secret in an environment variable for safety
+  secret: ${JWT_SECRET:v9y$B&E)H@McQfTjWnZr4u7x!A%C*F-JaNdRgUkXp2s5v8y/B?E(G+KbPeShVmYq}
   expiration: 3600000
