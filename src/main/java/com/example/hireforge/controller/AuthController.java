@@ -11,6 +11,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
@@ -29,26 +31,40 @@ public class AuthController {
                 request.getPassword()
         );
 
-        return ResponseEntity.ok("User registered with id: " + user.getId());
+        return ResponseEntity.ok(
+                Map.of(
+                        "message", "User registered successfully",
+                        "userId", user.getId()
+                )
+        );
     }
 
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody LoginRequest request) {
 
         User user = userService.findByEmail(request.getEmail())
-                .orElseThrow(() -> new RuntimeException("Invalid credentials"));
+                .orElse(null);
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
-            throw new RuntimeException("Invalid credentials");
+        if (user == null ||
+                !passwordEncoder.matches(request.getPassword(), user.getPasswordHash())) {
+
+            return ResponseEntity.status(401)
+                    .body(Map.of("error", "Invalid credentials"));
         }
 
         String token = jwtService.generateToken(user.getId(), user.getEmail());
 
-        return ResponseEntity.ok(token);
-    }
-    @GetMapping("/me")
-    public ResponseEntity<?> me() {
-        return ResponseEntity.ok("You are authenticated");
+        return ResponseEntity.ok(
+                Map.of(
+                        "token", token,
+                        "userId", user.getId(),
+                        "email", user.getEmail()
+                )
+        );
     }
 
+    @GetMapping("/me")
+    public ResponseEntity<?> me() {
+        return ResponseEntity.ok(Map.of("message", "You are authenticated"));
+    }
 }
