@@ -10,7 +10,9 @@ spring:
     show-sql: false
 
 server:
-  port: 8080
+  # This tells the app: Use the PORT variable from Render,
+  # but use 8080 as a backup if running locally.
+  port: ${PORT:8080}
 
 jwt:
   secret: ${JWT_SECRET}
