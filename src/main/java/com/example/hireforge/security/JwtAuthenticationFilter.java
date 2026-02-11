@@ -49,7 +49,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         User user = userRepository.findById(userId).orElse(null);
 
-        if (user != null) {
+        if (user != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UsernamePasswordAuthenticationToken authentication =
                     new UsernamePasswordAuthenticationToken(
@@ -64,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             SecurityContextHolder.getContext().setAuthentication(authentication);
         }
+
 
         filterChain.doFilter(request, response);
     }
