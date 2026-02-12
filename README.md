@@ -53,19 +53,30 @@ To run this project, you must set the following variables in your environment (R
 
 1. **Clone the repo:**
    ```bash
-   git clone [https://github.com/your-username/hireforge-backend.git](https://github.com/your-username/hireforge-backend.git)
+   git clone https://github.com/your-username/hireforge-backend.git
+   ```
 
-2. Configure Database:
-   Ensure PostgreSQL is running and update application.yml.
+2. **Configure Database:**
+   Ensure PostgreSQL is running and update `application.yml`.
 
-3 .Build & Run:
+3. **Build & Run:**
+   ```bash
+   mvn clean install
+   mvn spring-boot:run
+   ```
 
-  Bash
-  mvn clean install
-  mvn spring-boot:run
-  🌐 Deployment (Render)
-  Build Command: mvn clean install -DskipTests
+---
 
-Start Command: java -jar target/*.jar
+## 🌐 Deployment (Render)
 
-Environment: Add all keys from the Environment Variables section to the Render "Environment" tab.
+**Build Command:**
+```bash
+mvn clean install -DskipTests
+```
+
+**Start Command:**
+```bash
+java -jar target/*.jar
+```
+
+**Environment:** Add all keys from the Environment Variables section to the Render "Environment" tab.
