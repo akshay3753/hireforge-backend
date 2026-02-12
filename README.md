@@ -10,7 +10,7 @@ The service is designed with a stateless architecture, making it highly scalable
 
 ## 🛠 Tech Stack
 * **Language:** Java 17+
-* **Framework:** Spring Boot 3.x
+* **Framework:** Spring Boot 3.2.5
 * **Security:** Spring Security & JSON Web Token (JWT)
 * **Database:** PostgreSQL (Hosted on Neon.tech)
 * **ORM:** Spring Data JPA / Hibernate
