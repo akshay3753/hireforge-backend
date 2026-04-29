@@ -1,5 +1,6 @@
 package com.example.hireforge.service;
 
+import com.example.hireforge.exception.BadRequestException;
 import com.example.hireforge.entity.Role;
 import com.example.hireforge.entity.User;
 import com.example.hireforge.repository.UserRepository;
@@ -19,7 +20,7 @@ public class UserService {
     public User register(String name, String email, String rawPassword) {
 
         if (userRepository.existsByEmail(email)) {
-            throw new RuntimeException("Email already registered");
+            throw new BadRequestException("Email already registered");
         }
 
         User user = User.builder()
